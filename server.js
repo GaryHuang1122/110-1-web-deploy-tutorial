@@ -17,12 +17,12 @@ import Subscription from "./backend/resolvers/Subscription.js";
 import mongo from "./backend/mongo.js";
 import apiRoute from "./backend/route/api.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const port = process.env.PORT || 80;
+var __dirname = dirname(fileURLToPath(import.meta.url));
+var port = process.env.PORT || 80;
 
-const typeDefs = importSchema("./backend/schema.graphql");
-const pubsub = new PubSub();
-const app = express();
+var typeDefs = importSchema("./backend/schema.graphql");
+var pubsub = new PubSub();
+var app = express();
 
 app.use(cors());
 app.use("/api", apiRoute);
@@ -32,7 +32,7 @@ app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-const server = new ApolloServer({
+var server = new ApolloServer({
   typeDefs,
   resolvers: {
     Query,
@@ -46,7 +46,7 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app });
-const httpServer = http.createServer(app);
+var httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
 mongo.connect();
