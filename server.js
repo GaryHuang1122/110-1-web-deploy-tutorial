@@ -8,6 +8,7 @@ import "dotenv-defaults/config.js";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import wakeUpDyno from "./backend/route/wakeUpDyno.js";
 
 import db from "./backend/db.js";
 import Query from "./backend/resolvers/Query.js";
@@ -51,6 +52,8 @@ server.installSubscriptionHandlers(httpServer);
 mongo.connect();
 
 httpServer.listen(port, () => {
+  const DYNO_URL = "https://hw9-practice.heroku.com/";
+  wakeUpDyno(DYNO_URL)
   console.log(`🚀 Server Ready at ${port}! 🚀`);
   console.log(`Graphql Port at ${port}${server.subscriptionsPath}`);
 });
